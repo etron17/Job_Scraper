@@ -27,8 +27,8 @@ def job_search(key_word):
                     "Company": name.string.strip(),
                     "Title": title.string.strip(),
                     "Job_info (Location, Salary)": (', '.join(map(str, job_tags_list))),
-                    "job_tag": (', '.join(map(str.strip, job_role_tags))),
-                    "link": f"https://remoteok.com/{link}"
+                    "Job_tag": (', '.join(map(str.strip, job_role_tags))),
+                    "Link": f"https://remoteok.com/{link}"
                 }
 
                 results.append(job_data)
