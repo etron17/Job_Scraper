@@ -2,46 +2,52 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def job_search(key_word):
-    results = []
-    job_url = f"https://remoteok.com/remote-{key_word}-jobs"
+# Get a job keyword from the user
+def get_job_keyword():
+    job_keyword = input("Please enter job keyword: ")
 
+    return search_job(job_keyword)
+
+
+# Search a job keyword
+def search_job(keyword):
+    job_result = []
+
+    job_url = f"https://remoteok.com/remote-{keyword}-jobs"
     request = requests.get(job_url, headers={"User-Agent": "My_user_agent"})
-
     print('-----------------------------------------------------------------------------------------------------------------')
     if request.status_code == 200:
         soup = BeautifulSoup(request.text, "html.parser")
-        jobs = soup.find_all('table', id="jobsboard")
-        for job_section in jobs:
-            job_posts = job_section.find_all('tr', class_="job")
+        jobs_board = soup.find_all("table", id="jobsboard")
+        for job in jobs_board:
+            job_posts = job.find_all("tr", class_="job")
             for post in job_posts:
-                link = post['data-href']
-                job_info = post.find('td', class_="company position company_and_position")
-                job_role = post.find('td', class_="tags")
-                name = job_info.find('h3', itemprop="name")
-                title = job_info.find('h2', itemprop="title")
-                job_tags_list = [job_tag.text for job_tag in job_info.find_all("div", class_='location')]
-                job_role_tags = [job_des.text for job_des in job_role.find_all("h3")]
+                job_links = post["data-href"]
+                job_info = post.find("td", class_="company position company_and_position")
+                job_role = post.find("td", class_="tags")
+                company_name = job_info.find("h3", itemprop="name")
+                job_title = job_info.find("h2", itemprop="title")
+                job_info_tags = [info_tag.text for info_tag in job_info.find_all("div", class_="location")]
+                job_role_tags = [role_tag.text for role_tag in job_role.find_all("h3")]
 
                 job_data = {
-                    "Company": name.string.strip(),
-                    "Title": title.string.strip(),
-                    "Job_info (Location, Salary)": (', '.join(map(str, job_tags_list))),
-                    "Job_tag": (', '.join(map(str.strip, job_role_tags))),
-                    "Link": f"https://remoteok.com/{link}"
+                    "Company": company_name.string.strip(),
+                    "Title": job_title.string.strip(),
+                    "Job_info (Location, Salary)": (", ".join(map(str, job_info_tags))),
+                    "Job_role": (", ".join(map(str.strip, job_role_tags))),
+                    "Link": f"https://remoteok.com/{job_links}"
                 }
 
-                results.append(job_data)
-
+                job_result.append(job_data)
     else:
-        print(f"Can't request {job_url}")
+        print(f"Can't request {job_url}. Please enter again.")
+        get_job_keyword()
 
-    for job in results:
+    for job in job_result:
         for key, value in job.items():
             print(f"{key}: {value}")
         print('-----------------------------------------------------------------------------------------------------------------')
-    print(f'{len(results)} jobs are found')
+    print(f'{len(job_result)} jobs are found')
 
 
-job_search('Python')
-
+get_job_keyword()
