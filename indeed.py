@@ -3,8 +3,6 @@ from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 
 options = Options()
-options.add_argument("--no-sandbox")
-options.add_argument("--disable-dev-shm-usage")
 
 
 def get_job_keyword():
@@ -13,6 +11,7 @@ def get_job_keyword():
     return extract_indeed_jobs(key_word)
 
 
+# The maximum number of pages are limited by 5. -> Prevent massive requests
 def get_page_count(key_word):
     browser = webdriver.Chrome(options=options)
     browser.get(f"https://ca.indeed.com/jobs?q={key_word}")
@@ -32,7 +31,7 @@ def get_page_count(key_word):
 
 
 def extract_indeed_jobs(key_word):
-    results = []
+    results = []    # Store jobs
     pages = get_page_count(key_word)
     print("Found", pages)
     for page in range(pages):
@@ -44,16 +43,17 @@ def extract_indeed_jobs(key_word):
         job_search = soup.find("ul", class_="jobsearch-ResultsList css-0")
         jobs = job_search.find_all("li", recursive=False)   # Only find 'li' that is directly related to 'ul'
 
+        # Enter into li
         for job in jobs:
             zone = job.find("div", class_="mosaic-zone")
             if zone is None:
-                # h2 = job.find("h2", class_="jobTitle")
                 anchor = job.select_one("h2 a")    # Find 'a' inside of h2
-                title = anchor['aria-label']
-                link = anchor['href']
-                company = job.find("span", class_="companyName")
-                location = job.find("div", class_="companyLocation")
+                title = anchor['aria-label']    # Find 'aria-label'
+                link = anchor['href']   # Find 'href'
+                company = job.find("span", class_="companyName")    # Find 'span' that class name is 'companyName'
+                location = job.find("div", class_="companyLocation")    # Find 'div' that class name is 'companyLocation'
 
+                # Store company's info into dictionary{key:value}
                 job_data = {
                     "Company": company.string,
                     "Position": title,
@@ -61,7 +61,7 @@ def extract_indeed_jobs(key_word):
                     "Link": f"https://ca.indeed.com{link}"
                 }
                 results.append(job_data)
-
+        # Print out each element from dictionary
         for result in results:
             for key, value in result.items():
                 print(f"{key}: {value}")
