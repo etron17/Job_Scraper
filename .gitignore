@@ -1,1 +1,5 @@
+# Ignore .idea folder
 .idea/
+
+# Ignore dot-env file
+.env
