@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JobScrapper</title>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+</head>
+<body>
+   <main class="container">
+       <hgroup>
+           <h1>Search Results for "{{keyword}}":</h1>
+           <a target="_blank" href="/export?keyword={{keyword}}">Export to File</a>
+       </hgroup>
+       <figure>
+           <table role="grid">
+           <thead>
+            <tr>
+                <th>Company</th>
+                <th>Position</th>
+                <th>Location</th>
+                <th>Link</th>
+            </tr>
+           </thead>
+           <tbody>
+            {% for job in jobs %}
+                <tr>
+                    <td>{{job.Company}}</td>
+                    <td>{{job.Position}}</td>
+                    <td>{{job.Location}}</td>
+                    <td><a href="{{job.Link}}" target="_blank">Apply now&rarr;</a></td>
+                </tr>
+            {% endfor %}
+           </tbody>
+       </table>
+       </figure>
+   </main>
+</body>
+</html>
