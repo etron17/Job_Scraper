@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 import mysql.connector
 import os
-from file import save_to_file
+from tocsvfile import save_to_file
 from extract.indeed import extract_indeed_jobs
 
 load_dotenv()
