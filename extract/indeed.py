@@ -51,7 +51,7 @@ def extract_indeed_jobs(key_word):
                 title = anchor['aria-label']    # Find 'aria-label'
                 link = anchor['href']   # Find 'href'
                 company = job.find("span", class_="companyName")    # Find 'span' that class name is 'companyName'
-                location = job.find("div", class_="companyLocation")    # Find 'div' that class name is 'companyLocation'
+                location = job.find("div", class_="companyLocation")   # Find 'div' that class name is 'companyLocation'
 
                 # Store company's info into dictionary{key:value}
                 job_data = {
