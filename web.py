@@ -23,14 +23,13 @@ def search():
         for job in jobs:
             found = False
             for data in data_list:
-                if job['Company'] == data["company"] and job["Position"] == data["position"] and job["Location"] == data["location"]:
+                if job["Company"] == data["company"] and job["Position"] == data["position"] and job["Location"] == data["location"]:
                     found = True
                     break
 
             if not found:
                 job['keyword'] = keyword
                 jobdb.insert_record(job)
-
 
     return render_template("search.html", keyword=keyword, jobs=jobs)
 
