@@ -1,5 +1,11 @@
 # Job Scraper
 
+## Introduction
+
+This project demonstrates how to extract job listings from the Indeed and RemoteWork websites using Python's Beautifulsoup library. The extracted data is then stored in a CSV file and a MySQL database hosted on Clever Cloud. Finally, the results are displayed using Flask.
+
+
+
 ### 1. Enter job keyword (ex. python)
 
 <img width="1438" alt="Screen Shot 2022-10-08 at 12 54 40 PM" src="https://user-images.githubusercontent.com/90226898/198854448-c7a8f534-8880-48d5-a977-7442af28913a.png">
