@@ -2,8 +2,7 @@
 
 ## Introduction
 
-This project demonstrates how to extract job listings from the Indeed and RemoteWork websites using Python's Beautifulsoup library. The extracted data is then stored in a CSV file and a MySQL database hosted on Clever Cloud. Finally, the results are displayed using Flask.
-
+The objective of this project is to showcase the utilization of Python's Beautifulsoup library to extract job listings from two popular job search platforms, namely Indeed and RemoteWork. The extracted data is subsequently stored in both CSV and MySQL database formats, hosted on Clever Cloud. The final stage of the project involves displaying the results through the implementation of Flask, a Python web framework. Through this project, we demonstrate the ability to leverage different technologies and tools to extract and manage job listings data, and present it in a user-friendly format.
 
 
 ### 1. Enter job keyword (ex. python)
